@@ -10,24 +10,33 @@ String bandToJson(Band data) => json.encode(data.toJson());
 
 class Band {
   Band({
-    this.name,
     this.id,
+    this.name,
     this.vote,
   });
 
-  String name;
   String id;
+  String name;
   int vote;
 
   factory Band.fromJson(Map<String, dynamic> json) => Band(
-    name: json["name"],
-    id: json["id"],
-    vote: json["vote"],
+    id: json.containsKey('id') ? json["id"] : 'no-id',
+    name: json.containsKey('name') ? json["name"] : 'no-name',
+    vote: json.containsKey('vote') ? json["vote"] : 'no-vote',
   );
 
+  factory Band.fromMap( Map<String, dynamic> obj )
+  => Band(
+      id   : obj.containsKey('id') ? obj['id'] : 'no-id',
+      name : obj.containsKey('name') ? obj['name'] : 'no-name',
+      vote: obj.containsKey('vote') ? obj['vote'] : 'no-vote'
+  );
+
+
+
   Map<String, dynamic> toJson() => {
-    "name": name,
     "id": id,
+    "name": name,
     "vote": vote,
   };
 }
